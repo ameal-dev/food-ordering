@@ -4,6 +4,7 @@ import styled from "styled-components";
 import OrderContext from "../../../src/store/order-context";
 import { Img } from "../../../src/components/Img";
 import { Spacer } from "../../../src/components/_atoms";
+import { Button_Z } from "../../../src/components/_atoms";
 
 const TotalAmount = styled.div`
 	display: flex;
@@ -13,10 +14,13 @@ const TotalAmount = styled.div`
 
 const AmountText = styled.div`
 	flex: 1;
+	font-weight: bold;
+	font-size: 2rem;
 `;
 
 const AmountValue = styled.h2`
 	display: flex;
+	font-size: 2rem;
 `;
 
 const ModalOverlayWrapper = styled.div`
@@ -33,7 +37,6 @@ const ModalOverlayWrapper = styled.div`
 
 const ModalBox = styled.div`
 	padding: 1rem;
-	height: 50%;
 	width: 50%;
 	min-width: 300px;
 	min-height: 300px;
@@ -62,6 +65,8 @@ const CartItem = styled.div`
 const FoodName = styled.div`
 	display: flex;
 	align-items: center;
+	font-weight: bold;
+	font-size: 1.5rem;
 	flex: 1;
 `;
 
@@ -78,6 +83,10 @@ const CartModal = ({ show, closeModal }) => {
 	const [isBrowser, setIsBrowser] = useState(false);
 
 	const ctx = useContext(OrderContext);
+
+	const handleOrder = () => {
+		console.log("Ordering...");
+	};
 
 	useEffect(() => {
 		setIsBrowser(true);
@@ -147,6 +156,17 @@ const CartModal = ({ show, closeModal }) => {
 					<AmountValue>{`${ctx.total} $`}</AmountValue>
 					<Spacer />
 				</TotalAmount>
+
+				{ctx.orders ? (
+					<>
+						<Button_Z dark onClick={handleOrder}>
+							ORDER
+						</Button_Z>
+						<Spacer />
+					</>
+				) : (
+					""
+				)}
 			</ModalBox>
 		</ModalOverlayWrapper>
 	) : (

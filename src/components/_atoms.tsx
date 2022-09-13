@@ -113,7 +113,7 @@ export const InputOne = styled.input<{
 	}
 `;
 
-export const ButtonOne = styled.button<{
+export const Button_Z = styled.button<{
 	dark?: boolean;
 	padding?: string;
 	absolute?: boolean;
@@ -136,9 +136,7 @@ export const ButtonOne = styled.button<{
 	right: ${({ right }) => (right ? right : "")};
 	bottom: ${({ bottom }) => (bottom ? bottom : "")};
 	left: ${({ left }) => (left ? left : "")};
-	max-width: 50%;
 	height: ${({ height }) => (height ? height : "")};
-	width: 45%;
 	border: 2px solid ${({ dark }) => (dark ? "white" : "black")};
 	font-size: 1rem;
 	font-family: "Roboto Mono", monospace;
