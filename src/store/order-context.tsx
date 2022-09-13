@@ -1,58 +1,48 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 const ADD = "ADD";
 const REMOVE = "REMOVE";
 
 const OrderContext = React.createContext({
 	cart: {},
-	onAdd: (action) => {},
-	onRemove: (action) => {},
-	orders: 2,
+	foodsPrice: {},
+	onChange: (action) => {},
+	orders: 0,
+	total: 0,
 });
 
 const initalState = {
-	foods: { Sushi: 0, Golonka: 0, Schweinhaxe: 0, Fläsklägg: 0 },
+	foodsAmount: { Sushi: 0, Golonka: 0, Schweinhaxe: 0, Fläsklägg: 0 },
 	total: 0,
 	orders: 0,
 };
 
-const reducer = (state, action) => {
-	switch (action.type) {
+const reducer = (state, { type, payload }) => {
+	switch (type) {
 		case ADD: {
-			const newOrders = Object.values(state.foods).reduce(
-				(a: number, b: number) => a + b,
-				0
-			);
 			const newState = {
-				foods: {
-					...state.foods,
-					[action.payload.value]: state.foods[action.payload.value] + 1,
+				foodsAmount: {
+					...state.foodsAmount,
+					[payload.value]: state.foodsAmount[payload.value] + 1,
 				},
-				total: state.total + action.payload.price,
-				orders: newOrders,
+				total: state.total + payload.price,
+				orders: state.orders + 1,
 			};
-			//below solution works:
-			// orders: state.orders + 1
 			console.log(newState);
+
 			return newState;
 		}
 		case REMOVE: {
-			if (state.foods[action.payload.value] > 0) {
-				const newOrders = Object.values(state.foods).reduce(
-					(a: number, b: number) => a + b,
-					0
-				);
+			if (state.foodsAmount[payload.value] > 0) {
+				console.log(payload);
 				const newState = {
-					foods: {
-						...state.foods,
-						[action.payload.value]: state.foods[action.payload.value] - 1,
+					foodsAmount: {
+						...state.foodsAmount,
+						[payload.value]: state.foodsAmount[payload.value] - 1,
 					},
-					total: state.total - action.payload.price,
-					orders: newOrders,
+					total: state.total - payload.price,
+					orders: state.orders - 1,
 				};
-				//below solution works:
-				// orders: state.orders - 1
 				console.log(newState);
-
 				return newState;
 			} else {
 				return { ...state };
@@ -69,9 +59,10 @@ export const OrderContextProvider = (props) => {
 	return (
 		<OrderContext.Provider
 			value={{
-				cart: state.foods,
-				onAdd: dispatch,
-				onRemove: dispatch,
+				cart: state.foodsAmount,
+				foodsPrice: { Sushi: 49, Golonka: 19, Schweinhaxe: 29, Fläsklägg: 39 },
+				total: state.total,
+				onChange: dispatch,
 				orders: state.orders,
 			}}
 		>

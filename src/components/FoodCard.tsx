@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Spacer } from "./_atoms";
 import { Img } from "./Img";
@@ -11,11 +11,11 @@ const FoodCard: React.FC<{ name: string; price: number }> = ({
 	const ctx = useContext(OrderContext);
 
 	const handleRemove = () => {
-		ctx.onRemove({ type: "REMOVE", payload: { value: name, price: price } });
+		ctx.onChange({ type: "REMOVE", payload: { value: name, price: price } });
 	};
 
 	const handleAdd = () => {
-		ctx.onAdd({ type: "ADD", payload: { value: name, price: price } });
+		ctx.onChange({ type: "ADD", payload: { value: name, price: price } });
 	};
 
 	return (
@@ -55,10 +55,6 @@ const StyledName = styled.h3`
 	margin: 0;
 `;
 
-const StyledAmount = styled.h1`
-	margin-bottom: 25px;
-`;
-
 const CardWrapper = styled.div`
 	display: flex;
 	border: 2px solid white;
@@ -77,6 +73,10 @@ const FoodInfoCard = styled.div`
 	flex-direction: column;
 	flex: 1;
 	padding: 0 1rem;
+`;
+
+const StyledAmount = styled.h1`
+	margin-bottom: 25px;
 `;
 const ButtonGroupWrapper = styled.div`
 	display: flex;

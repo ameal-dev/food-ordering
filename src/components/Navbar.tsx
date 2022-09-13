@@ -24,21 +24,19 @@ const StyledAppnameCard = styled.h1`
 const StyledCartCard = styled.div`
 	display: flex;
 	justify-content: center;
+	cursor: pointer;
 	align-items: center;
 	margin-right: 5rem;
 	font-size: 2rem;
 `;
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<{ showModal: () => void }> = ({ showModal }) => {
 	const ctx = useContext(OrderContext);
 
-	const calculateOrders = () => {
-		return ctx.orders;
-	};
 	return (
 		<StyledNavbar>
 			<StyledAppnameCard>KOCKKYSS</StyledAppnameCard>
-			<StyledCartCard>{calculateOrders()}</StyledCartCard>
+			<StyledCartCard onClick={showModal}>{ctx.orders}</StyledCartCard>
 		</StyledNavbar>
 	);
 };
